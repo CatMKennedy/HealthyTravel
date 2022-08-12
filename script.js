@@ -6,8 +6,6 @@ const weatherText = document.querySelector(".weatherInfo");
 
 //Get array of buttons
 let btns = [...document.getElementsByClassName("button")];
-//console.log(`Buttons = ${btns}`);
-//console.log(`Button[0]= ${btns[0].textContent}`);
 
 //Add event listeners to buttons
 btns.forEach((btn) =>
