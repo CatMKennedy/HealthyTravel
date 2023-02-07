@@ -1,5 +1,9 @@
 "use strict";
 
+/* This is a small test application using vanilla js (no framework).
+The goal is to explore the recent additions to javascript (such as async/await) and some public APIs.
+*/
+
 const cityText = document.querySelector(".cityInfo");
 const countryText = document.querySelector(".countryInfo");
 const weatherText = document.querySelector(".weatherInfo");
