@@ -19,7 +19,6 @@ let btns = [...document.getElementsByClassName("button")];
 btns.forEach((btn) =>
   btn.addEventListener("click", () => {
     let [city, country] = btn.textContent.split(", ");
-    //console.log(`ForEach: city = ${city}, country = ${country}`);
     getData(city, country);
   })
 );
@@ -33,7 +32,6 @@ const renderData = function (
 ) {
   //Display city data
   cityText.textContent = `${cityData.city}, ${cityData.country}: Lat: ${cityData.lat}, Long: ${cityData.long}.`;
-  // cityText.textContent = `${city}, ${country}: Lat: ${cityData.latt}, Long: ${cityData.longt}.`;
   cityText.style.opacity = 1;
 
   //Display weather data
@@ -56,10 +54,9 @@ const getData = async function (city, country) {
     const resCity = await fetch(`https://geocode.xyz/${city}?geoit=json`);
     if (!resCity.ok)
       throw new Error(
-        `Problem getting city data - request is sometimes refused. Please retry`
+        `Problem getting city data - high frequency requests may be refused. Please retry`
       );
     const geoData = await resCity.json();
-    //console.log(geoData);
 
     //Set up city data for rendering, using lat and long from geocode data
     const cityData = {
@@ -68,15 +65,13 @@ const getData = async function (city, country) {
       lat: geoData.latt,
       long: geoData.longt,
     };
-    //console.log(cityData);
-
+   
     //Get weather data
     const resWeather = await fetch(
       `https://weatherdbi.herokuapp.com/data/weather/${city}`
     );
     if (!resWeather.ok) throw new Error(`Problem getting weather data`);
     const weatherData = await resWeather.json();
-    //console.log(weatherData);
 
     //This is an API for sunrise and sunset - but only has data for some locations
     // const resSun = await fetch(
@@ -93,13 +88,13 @@ const getData = async function (city, country) {
     if (!resCountry.ok)
       throw new Error(`Problem getting country data; check country name`);
     const countryData = await resCountry.json();
-    //console.log(countryData);
 
+    //Display the data
     renderData(cityData, weatherData.currentConditions, countryData[0]);
   } catch (err) {
     console.error(`${err} **** `);
 
-    //Reject promise - can rethrow error so that it propagates
+    //Could rethrow error here so that it propagates
     //throw err;
   }
 };
